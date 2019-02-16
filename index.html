@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" type="text/css" href="myCalculator.css">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
+
+    <style media="screen">
+
+    </style>
+    <title>My Calculator</title>
+  </head>
+
+  <body>
+    <div id="full_calc">
+      <table id="Upper_table">
+          <tr>
+            <td id = "Heading">My Calculator</td>
+          </tr>
+
+          <tr class="View_numbers">
+            <td><input type="text" id="MyOutput" placeholder="0" readonly= "readonly"></td>
+          </tr>
+
+          <tr class="View_numbers">
+            <td><input type="text" id="myInput" type="text" readonly= "readonly"></td>
+          </tr>
+      </table>
+
+      <table id="Lower_table">
+          <tr>
+              <td><input type="button" class="button" class="bracket" id="_button_(" name="(" value="("></td>
+              <td><input type="button" class="button" class="bracket" id="_button_)" name=")" value=")"></td>
+              <td><input type="button" id="_button_CE" name="Clear" value="CE"></td>
+              <td><input type="button" id="Ans" name="Ans" value="Ans"></td>
+          </tr>
+
+          <tr>
+              <td><input type="button" class="button" class="number" id="_button_7" name="7" value="7"></td>
+              <td><input type="button" class="button" class="number" id="_button_8" name="8" value="8"></td>
+              <td><input type="button" class="button" class="number" id="_button_9" name="9" value="9"></td>
+              <td><input type="button" class="button" class="Oper" id="_button_divide" name="/" value="/"></td>
+          </tr>
+
+          <tr>
+              <td><input type="button" class="button" class="number" id="_button_4" name="4" value="4" onclick="buttonWasPressed(4)"></td>
+              <td><input type="button" class="button" class="number" id="_button_5" name="5" value="5"></td>
+              <td><input type="button" class="button" class="number" id="_button_6" name="6" value="6"></td>
+              <td><input type="button" class="button" class="Oper" id="_button_mult" name="*" value="*"></td>
+          </tr>
+
+          <tr>
+              <td><input type="button" class="button" class="number" id="_button_1" name="1" value="1"></td>
+              <td><input type="button" class="button" class="number" id="_button_2" name="2" value="2"></td>
+              <td><input type="button" class="button" class="number" id="_button_3" name="3" value="3"></td>
+              <td><input type="button" class="button" class="Oper" id="_button_subtract" name="-" value="-"></td>
+          </tr>
+
+          <tr>
+              <td><input type="button" class="button" class="number" id="_button_0" name="0" value="0"></td>
+              <td><input type="button" class="button" class="Oper" id="_button_decimal" name="." value="."></td>
+              <td><input type="button" id="_button_equal" name="=" value="="></td>
+              <td><input type="button" class="button" class="Oper" id="_button_add" name="+" value="+"></td>
+          </tr>
+      </table>
+
+      <script type="text/javascript">
+        $("document").ready(function() {
+          var equation = null;
+          var PreAnswer = null;
+
+          $(".button").click(function(){
+            if(equation===null){
+              equation = ($(this).attr('value'));
+              $("#myInput").val(equation);
+            }
+            else {
+                equation+=($(this).attr('value'));
+                $("#myInput").val(equation);
+            }
+          });
+
+          $("#_button_CE").click(function(){
+            if(equation.length === 0){}
+            else{
+              equation = equation.slice(0,-1);
+              console.log(equation);
+              $("#myInput").val(equation);
+            }
+          });
+
+          $("#Ans").click(function(){
+            if(PreAnswer===null){}
+            else{
+              equation+=PreAnswer;
+              $("#myInput").val(equation);
+            }
+          });
+
+          $("#_button_equal").click(function(){
+            try {
+              var answer = eval(equation);
+              $("#MyOutput").val(answer);
+              PreAnswer = answer;
+              equation = null;
+            } catch (e) {
+                if (e instanceof SyntaxError) {
+                    $("#MyOutput").val("Error");
+                    equation = null;
+                    $("#myInput").val("");
+                }
+            }
+          });
+        });
+      </script>
+    </div>
+  </body>
+</html>
